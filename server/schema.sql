@@ -28,6 +28,20 @@ CREATE TABLE messages (
   FOREIGN KEY (username) REFERENCES users(u_id)
 )ENGINE=INNODB;
 
--- ALTER TABLE `messages` ADD
-
--- ALTER TABLE `messages` ADD CONSTRAINT `messages_fk1`
+"insert into messages(username, roomname, text, created_at) 
+  values(
+    (if not exists( select from users(username) where username='tyler' ) 
+      begin 
+        insert into users(username) values('tyler');
+        select from users(u_id) where username='tyler';
+    else 
+      begin
+        select from users(u_id) where username='tyler';),
+    (if not exists( select from room(r_id) where roomname='someRoom')
+      begin
+        insert into rooms(roomname) values ('someRoom');
+        select from rooms(r_id) where roomname='someRoom';
+      else
+        begin
+          select from rooms(r_id) where roomname='someRoom';),
+    'this is a message', UNIX_TIMESTAMP());"
