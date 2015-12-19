@@ -2,6 +2,7 @@ var http = require("http");
 var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
+var db = require('./db/index.js');
 
 var storage = [];
 
@@ -13,8 +14,7 @@ app.get(/classes/, function(request, response){
 });
 
 app.post(/classes/, function(request, response) {
-  storage.push(request.body);
-  console.log(request.body);
+  db.insert(request.body);
   response.status(201).json( {'results': storage} );
 });
 
