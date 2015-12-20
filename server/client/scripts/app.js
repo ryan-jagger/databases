@@ -1,13 +1,13 @@
 // YOUR CODE HERE:
 var app = {
-  server: 'http://127.0.0.1:3000/classes/',
+  server: 'http://127.0.0.1:3000/classes/messages',
   invalid: ['script', 'img', 'body', 'iframe', 'input', 'link', 'table', 'div', 'object'],
   testmessage: {text:'message text', username:'bob10', roommname: '4chan'}
 };
 
 var client = {
   friends: [],
-  currRoom: "lobby",
+  currRoom: "messages",
   messages: []
 };
 
@@ -58,7 +58,7 @@ app.fetch = function() {
 
   $.ajax({
     // This is the url you should use to communicate with the parse API server.
-    url: app.server + client.currRoom,
+    url: app.server,
     type: 'GET',
     contentType: 'application/json',
     // data: 'where={"roomname":"' + client.currRoom + '"}',
@@ -73,7 +73,7 @@ app.fetch = function() {
         if (app.isValid(obj)) {
           client.messages.push(obj);
         }
-
+        app.updateMsg();
       });
 
     },
@@ -96,7 +96,7 @@ app.addMessage = function(message) {
   $('#chats')
     .append(element + "'><span class='username'>" +
       message.username + "</span>: <span class='message'>" +
-      message.message_text + "</span></div>");
+      message.text + "</span></div>");
 };
 
 app.addRoom = function(room) {
@@ -128,13 +128,13 @@ app.updateMsg = function() {
 };
 
 app.isValid = function(obj) {
-  if (obj.username === undefined || obj.message_text === undefined) {
+  if (obj.username === undefined || obj.text === undefined) {
     return false;
   }
 
   for (var i = 0; i < app.invalid.length; i++) {
     var regexp = new RegExp('<.*?'+app.invalid[i]+'.*?>'); //<script> //+ means 1 or more occurences, * means 0 or more
-    if (regexp.test(obj.username) || regexp.test(obj.message_text)) {
+    if (regexp.test(obj.username) || regexp.test(obj.text)) {
       return false;
     }
   }

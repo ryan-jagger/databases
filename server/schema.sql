@@ -26,3 +26,5 @@ CREATE TABLE messages (
   -- FOREIGN KEY (roomname) REFERENCES rooms(r_id),
   FOREIGN KEY (username) REFERENCES users(user_id)
 )ENGINE=INNODB;
+
+
