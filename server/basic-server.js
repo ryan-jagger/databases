@@ -10,7 +10,8 @@ app.use(express.static(__dirname + "/client"));
 app.use(bodyParser.json());
 
 app.get(/classes/, function(request, response){
-  response.status(200).json({'results': storage});
+//  var results;
+  db.retrieve(response);
 });
 
 app.post(/classes/, function(request, response) {

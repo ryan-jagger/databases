@@ -1,7 +1,8 @@
 // YOUR CODE HERE:
 var app = {
   server: 'http://127.0.0.1:3000/classes/',
-  invalid: ['script', 'img', 'body', 'iframe', 'input', 'link', 'table', 'div', 'object']
+  invalid: ['script', 'img', 'body', 'iframe', 'input', 'link', 'table', 'div', 'object'],
+  testmessage: {text:'message text', username:'bob10', roommname: '4chan'}
 };
 
 var client = {
@@ -95,7 +96,7 @@ app.addMessage = function(message) {
   $('#chats')
     .append(element + "'><span class='username'>" +
       message.username + "</span>: <span class='message'>" +
-      message.text + "</span></div>");
+      message.message_text + "</span></div>");
 };
 
 app.addRoom = function(room) {
@@ -127,13 +128,13 @@ app.updateMsg = function() {
 };
 
 app.isValid = function(obj) {
-  if (obj.username === undefined || obj.text === undefined) {
+  if (obj.username === undefined || obj.message_text === undefined) {
     return false;
   }
 
   for (var i = 0; i < app.invalid.length; i++) {
     var regexp = new RegExp('<.*?'+app.invalid[i]+'.*?>'); //<script> //+ means 1 or more occurences, * means 0 or more
-    if (regexp.test(obj.username) || regexp.test(obj.text)) {
+    if (regexp.test(obj.username) || regexp.test(obj.message_text)) {
       return false;
     }
   }
