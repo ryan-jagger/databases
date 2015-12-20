@@ -14,10 +14,16 @@ app.get(/classes/, function(request, response){
   db.retrieve(response);
 });
 
-app.post(/classes/, function(request, response) {
-  db.insert(request.body);
+app.post(/classes\/messages/, function(request, response) {
+  db.insert(request.body, 'message');
   response.status(201).json( {'results': storage} );
 });
+
+app.post(/classes\/users/, function(request, response) {
+  db.insert(request.body, 'user');
+  response.status(201).json( {'results': storage} );
+});
+
 
 var server = app.listen(3000, function(){
 

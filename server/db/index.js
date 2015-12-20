@@ -11,12 +11,14 @@ var pool = mysql.createPool({
 /*
     insert into database
 */
-var insert = function(msgObj){
+var insert = function(msgObj, type){
   console.log('opening connection');
   pool.query('INSERT INTO users (username) VALUES (?)', [msgObj.username], function(err, rows){
     pool.query('SELECT user_id FROM users WHERE username=?', [msgObj.username], function(err, rows){
       if(err){console.log(err);}
-      finalSubmit(msgObj, rows[0].user_id);
+      if(type === 'message'){
+        finalSubmit(msgObj, rows[0].user_id);        
+      }
     });
   });
 };
